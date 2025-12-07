@@ -35,7 +35,7 @@ export default function Slide3() {
             <iframe
               width="100%"
               height="100%"
-              src="https://www.youtube.com/embed/N5AynalXD9g"
+              src="https://youtu.be/MD2fYip6QsQ?si=u4NpnI6zhHJGdR-M"
               title="Adam Optimizer Explained"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
