@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import dynamic from 'next/dynamic'
@@ -479,7 +479,7 @@ export default function Slide5() {
             <Target className="w-4 h-4 text-pink-400" />
             <span className="text-pink-300 text-sm">Skewed Valley Challenge</span>
           </div>
-          <h1 className="text-3xl font-bold mb-4">🎯 Adam Optimization on Skewed Valley</h1>
+          <h1 className="text-3xl font-bold mb-4">🎯 Adam Optimization on Skewed Valley: f(x,y) = 2x<sup>2</sup> + y<sup>2</sup> - xy - 3x - y + 4</h1>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             Watch animation AND adjust parameters in real-time
             <span className="text-yellow-400 font-mono ml-2">Iterations: {MAX_ITERATIONS}</span>
@@ -721,7 +721,7 @@ export default function Slide5() {
                   </div>
                   <div className="flex justify-between">
                     <span>Global Min:</span>
-                    <span className="text-green-300">1.0000 at (1,1)</span>
+                    <span className="text-green-300">2.0000 at (1,1)</span>
                   </div>
                 </div>
               </div>
