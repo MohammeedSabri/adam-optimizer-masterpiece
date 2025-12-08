@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { ArrowDown, Sparkles, Zap, Brain } from 'lucide-react'
 
@@ -79,7 +79,7 @@ export default function Slide1() {
                 <div className="text-sm text-gray-400">Year Introduced</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl lg:text-4xl font-bold text-pink-400 mb-2">80K+</div>
+                <div className="text-3xl lg:text-4xl font-bold text-pink-400 mb-2">90K+</div>
                 <div className="text-sm text-gray-400">Papers Citing</div>
               </div>
             </div>
