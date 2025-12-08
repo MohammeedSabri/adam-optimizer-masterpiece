@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import dynamic from 'next/dynamic'
@@ -485,7 +485,14 @@ export default function Slide6() {
             <Target className="w-4 h-4 text-purple-400" />
             <span className="text-purple-300 text-sm">Animation + LIVE Updates</span>
           </div>
-          <h1 className="text-3xl font-bold mb-4">🏔️ Rosenbrock Valley</h1>
+          
+          {/* UPDATED TITLE SECTION WITH FUNCTION */}
+          <h1 className="text-3xl font-bold mb-2">🏔️ Rosenbrock Valley f(x,y) = (1-x)² + 100(y-x²)²</h1>
+          
+          <div className="text-lg text-cyan-300 font-mono mb-2">
+            Global Minimum at (1,1) with f(1,1)=0
+          </div>
+          
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             Watch animation AND adjust parameters in real-time
             <span className="text-yellow-400 font-mono ml-2">Iterations: {MAX_ITERATIONS}</span>
