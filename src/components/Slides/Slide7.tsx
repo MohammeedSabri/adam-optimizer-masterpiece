@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState } from 'react'
 import { Code2, Copy, Check, Play, FileCode } from 'lucide-react'
@@ -19,17 +19,18 @@ export default function Slide7() {
     %   max_iters   - Maximum iterations (default: 1000)
     
     % Set default parameters
-    if nargin < 3, alpha = 0.001; end
-    if nargin < 4, beta1 = 0.9; end
-    if nargin < 5, beta2 = 0.999; end
-    if nargin < 6, epsilon = 1e-8; end
-    if nargin < 7, max_iters = 1000; end
+    if nargin < 3 || isempty(alpha), alpha = 0.001; end
+    if nargin < 4 || isempty(beta1), beta1 = 0.9; end
+    if nargin < 5 || isempty(beta2), beta2 = 0.999; end
+    if nargin < 6 || isempty(epsilon), epsilon = 1e-8; end
+    if nargin < 7 || isempty(max_iters), max_iters = 1000; end
     
     % Initialize
     theta = theta_init;
     m = zeros(size(theta));      % First moment vector
     v = zeros(size(theta));      % Second moment vector
-    history = zeros(max_iters, length(theta) + 1);
+    history.theta = zeros(max_iters, length(theta));
+    history.grad_norm = zeros(max_iters, 1);
     
     % Main optimization loop
     for t = 1:max_iters
@@ -50,11 +51,13 @@ export default function Slide7() {
         theta = theta - alpha * m_hat ./ (sqrt(v_hat) + epsilon);
         
         % Store history
-        history(t, :) = [theta', norm(g)];
+        history.theta(t, :) = theta';
+        history.grad_norm(t) = norm(g);
     end
     
     % Trim history
-    history = history(1:t, :);
+    history.theta = history.theta(1:t, :);
+    history.grad_norm = history.grad_norm(1:t);
 end`
 
   const pythonCode = `import numpy as np
@@ -86,14 +89,17 @@ def adam_optimizer(grad_func, theta_init, alpha=0.001, beta1=0.9,
     theta : numpy.ndarray
         Optimized parameters
     history : dict
-        Optimization history
+        Optimization history with keys 'theta' and 'grad_norm'
     """
     
     # Initialize
     theta = theta_init.copy()
     m = np.zeros_like(theta)     # First moment vector
     v = np.zeros_like(theta)     # Second moment vector
-    history = {'theta': [], 'grad_norm': []}
+    history = {
+        'theta': np.zeros((max_iters, len(theta))),
+        'grad_norm': np.zeros(max_iters)
+    }
     
     # Main optimization loop
     for t in range(1, max_iters + 1):
@@ -114,35 +120,39 @@ def adam_optimizer(grad_func, theta_init, alpha=0.001, beta1=0.9,
         theta = theta - alpha * m_hat / (np.sqrt(v_hat) + epsilon)
         
         # Store history
-        history['theta'].append(theta.copy())
-        history['grad_norm'].append(np.linalg.norm(g))
+        history['theta'][t-1, :] = theta.copy()
+        history['grad_norm'][t-1] = np.linalg.norm(g)
     
     return theta, history`
 
   const pseudocode = `Algorithm: Adam (Adaptive Moment Estimation)
 -------------------------------------------------
 Input: 
+  θ₀: Initial parameter vector
   α: Learning rate (default: 0.001)
   β₁, β₂: Exponential decay rates (default: 0.9, 0.999)
   ε: Small constant for numerical stability (default: 1e-8)
-  f(θ): Objective function with parameters θ
-  θ₀: Initial parameter vector
+  f(θ): Objective function
+  max_iters: Maximum iterations (default: 1000)
 
 Initialize:
   m₀ ← 0 (Initialize 1st moment vector)
   v₀ ← 0 (Initialize 2nd moment vector)
-  t ← 0 (Initialize timestep)
+  history ← {theta: [], grad_norm: []}
 
-Repeat until convergence:
-  t ← t + 1
-  gₜ ← ∇f(θₜ₋₁)  (Get gradients w.r.t. stochastic objective)
-  mₜ ← β₁·mₜ₋₁ + (1 - β₁)·gₜ  (Update biased first moment)
-  vₜ ← β₂·vₜ₋₁ + (1 - β₂)·gₜ² (Update biased second moment)
-  m̂ₜ ← mₜ / (1 - β₁ᵗ)        (Compute bias-corrected 1st moment)
-  v̂ₜ ← vₜ / (1 - β₂ᵗ)        (Compute bias-corrected 2nd moment)
-  θₜ ← θₜ₋₁ - α·m̂ₜ / (√v̂ₜ + ε) (Update parameters)
+For t = 1 to max_iters:
+  gₜ ← ∇f(θₜ₋₁)                     ▷ Compute gradient
+  mₜ ← β₁·mₜ₋₁ + (1 - β₁)·gₜ       ▷ Update biased 1st moment
+  vₜ ← β₂·vₜ₋₁ + (1 - β₂)·gₜ²      ▷ Update biased 2nd moment
+  m̂ₜ ← mₜ / (1 - β₁ᵗ)              ▷ Bias-correct 1st moment
+  v̂ₜ ← vₜ / (1 - β₂ᵗ)              ▷ Bias-correct 2nd moment
+  θₜ ← θₜ₋₁ - α·m̂ₜ / (√v̂ₜ + ε)    ▷ Update parameters
+  
+  ▷ Store history
+  history.theta[t] ← θₜ
+  history.grad_norm[t] ← ‖gₜ‖
 
-Return: θₜ (Resulting parameters)`
+Return: (θₜ, history)`
 
   const copyToClipboard = () => {
     const code = activeVersion === 'matlab' ? matlabCode : 
@@ -352,16 +362,17 @@ Return: θₜ (Resulting parameters)`
                 <h4 className="font-semibold text-green-300 mb-2">MATLAB Example</h4>
                 <div className="bg-gray-900 p-4 rounded-lg">
                   <pre className="text-sm text-green-300">
-{`% Define Rosenbrock function gradient
-grad = @(theta) [-2*(1-theta(1)) - 400*theta(1)*(theta(2)-theta(1)^2);
-                 200*(theta(2)-theta(1)^2)];
+{`% Define skewed valley function gradient
+grad = @(theta) [4*theta(1) - theta(2) - 3;
+                 2*theta(2) - theta(1) - 1];
 
 % Run Adam
-theta0 = [-1.5; -1.0];
+theta0 = [-1.5; 2.0];
 [theta_opt, history] = adam_optimizer(grad, theta0);
 
 disp('Optimal parameters:');
-disp(theta_opt);`}
+disp(theta_opt);
+disp(['Final gradient norm: ', num2str(history.grad_norm(end))]);`}
                   </pre>
                 </div>
               </div>
@@ -371,16 +382,17 @@ disp(theta_opt);`}
                   <pre className="text-sm text-yellow-300">
 {`import numpy as np
 
-def rosenbrock_grad(theta):
+def skewed_valley_grad(theta):
     x, y = theta
-    return np.array([-2*(1-x) - 400*x*(y-x**2),
-                     200*(y-x**2)])
+    return np.array([4*x - y - 3,
+                     2*y - x - 1])
 
 # Run Adam
-theta0 = np.array([-1.5, -1.0])
-theta_opt, history = adam_optimizer(rosenbrock_grad, theta0)
+theta0 = np.array([-1.5, 2.0])
+theta_opt, history = adam_optimizer(skewed_valley_grad, theta0)
 
-print(f"Optimal parameters: {theta_opt}")`}
+print(f"Optimal parameters: {theta_opt}")
+print(f"Final gradient norm: {history['grad_norm'][-1]}")`}
                   </pre>
                 </div>
               </div>
