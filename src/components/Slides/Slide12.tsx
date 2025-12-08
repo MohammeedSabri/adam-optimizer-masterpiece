@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, GraduationCap, MapPin, Target, Users, Award, Code, Brain } from "lucide-react";
@@ -244,7 +244,7 @@ export default function Slide12() {
             <span>🎯 Interactive 3D Visualizations</span>
             <span>⚡ Real-time Parameter Updates</span>
             <span>📊 Professional Research Presentation</span>
-            <span>🎓 FST Mohammedia 2024</span>
+            <span>🎓 FST Mohammedia 2025-2026</span>
           </div>
         </motion.div>
       </div>
