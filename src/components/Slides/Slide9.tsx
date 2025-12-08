@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState } from 'react'
 import { CheckCircle, Zap, Target, TrendingUp, Award, Rocket, Sparkles } from 'lucide-react'
@@ -86,7 +86,7 @@ export default function Slide9() {
                     <div>
                       <h3 className="text-lg font-semibold text-cyan-300 mb-1">Bias Correction Matters</h3>
                       <p className="text-gray-300">
-                        The $1/(1-β^t)$ correction fixes Adam's "cold start" problem, ensuring faster convergence 
+                        The 1/(1-β^t) correction fixes Adam's "cold start" problem, ensuring faster convergence 
                         during early training iterations.
                       </p>
                     </div>
@@ -99,7 +99,7 @@ export default function Slide9() {
                     <div>
                       <h3 className="text-lg font-semibold text-purple-300 mb-1">Default Parameters Work</h3>
                       <p className="text-gray-300">
-                        With $β_1=0.9$, $β_2=0.999$, $α=0.001$, Adam provides robust performance across diverse 
+                        With β1=0.9, β2=0.999, α=0.001, Adam provides robust performance across diverse 
                         optimization landscapes without extensive tuning.
                       </p>
                     </div>
