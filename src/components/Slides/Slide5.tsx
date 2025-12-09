@@ -552,8 +552,8 @@ export default function Slide5() {
                     </label>
                     <input
                       type="range"
-                      min="0.5"
-                      max="0.99"
+                      min="0.0"
+                      max="1.0"
                       step="0.001"
                       value={params.beta1}
                       onChange={(e) => updateParam('beta1', parseFloat(e.target.value))}
@@ -567,8 +567,8 @@ export default function Slide5() {
                     </label>
                     <input
                       type="range"
-                      min="0.9"
-                      max="0.999"
+                      min="0.0"
+                      max="1.0"
                       step="0.001"
                       value={params.beta2}
                       onChange={(e) => updateParam('beta2', parseFloat(e.target.value))}
