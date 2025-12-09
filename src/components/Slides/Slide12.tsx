@@ -245,6 +245,7 @@ export default function Slide12() {
             <span>⚡ Real-time Parameter Updates</span>
             <span>📊 Professional Research Presentation</span>
             <span>🎓 FST Mohammedia 2025-2026</span>
+            <span>© 2025 Mohammed Sabri, Akioud Rayan. This interactive presentation is proprietary. Any unauthorized use or dissemination is a violation of copyright law.</span>
           </div>
         </motion.div>
       </div>
