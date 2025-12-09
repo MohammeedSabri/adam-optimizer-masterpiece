@@ -34,7 +34,7 @@ export default function Slide4() {
       name: 'AdaGrad',
       title: '3. AdaGrad: Per-Parameter Adaptation',
       description: 'Gives each parameter its own learning rate based on historical gradient magnitudes.',
-      equation: 'g²ₜ = Σ(∇fᵢ)²\nθₜ = θₜ₋₁ - α/(√g²ₜ + ε) · ∇f(θₜ₋₁)',
+      equation: 'g²ₜ = Σ(∇fᵢ)²\nθₜ = θₜ₋₁ - α/(√g²ₜ + ε)',
       explanation: 'Sensitive parameters get small steps, stubborn parameters get larger steps.',
       color: 'blue'
     },
